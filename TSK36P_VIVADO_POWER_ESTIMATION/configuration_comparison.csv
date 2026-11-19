@@ -1,0 +1,8 @@
+Comparison_ID,Configuration_Mode,Supported_in_RTL,Workload,Sparsity_Level,Cycle_Count,Relative_Throughput,Estimated_Dynamic_Power_W,Estimated_Static_Power_W,Estimated_Total_Power_W,Comparison_Feasibility,Action_Required_For_Fair_Comparison
+CMP_01,64-PE_Dense,YES,WL1_Dense,0.00%,9569,1.000x,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Obtain Vivado license & confirm target FPGA part to run report_power"
+CMP_02,64-PE_Sparse,YES,WL1_Sparse,68.89%,9569,1.000x,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Obtain Vivado license & annotate WL1_sparse.vcd to measure zero-gating power savings"
+CMP_03,32-PE_Dense,YES,WL1_Dense,0.00%,19121,0.500x,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Obtain Vivado license & confirm target FPGA part to evaluate 32-PE dynamic power"
+CMP_04,32-PE_Sparse,YES,WL1_Sparse,68.89%,19121,0.500x,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Obtain Vivado license & annotate WL1_sparse.vcd in 32-PE mode"
+CMP_05,16-PE_Dense,YES,WL1_Dense,0.00%,38225,0.250x,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Obtain Vivado license & confirm target FPGA part to evaluate 16-PE dynamic power"
+CMP_06,16-PE_Sparse,YES,WL1_Sparse,68.89%,38225,0.250x,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Obtain Vivado license & annotate WL1_sparse.vcd in 16-PE mode"
+

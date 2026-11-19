@@ -1,0 +1,7 @@
+Activity_ID,Workload_Name,Workload_Type,Simulation_Tool,Activity_File_Format,Total_Design_Signals,Annotated_Signals,Signal_Coverage_Pct,Total_IO_Ports,Annotated_IO_Ports,IO_Coverage_Pct,Total_Internal_Nets,Annotated_Internal_Nets,Net_Coverage_Pct,Status,Notes
+ACT_01,WL1_Dense,Dense,Icarus_Verilog_12.0,VCD,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,PENDING_LICENSE,"VCD dump supported by iverilog; Vivado read_vcd blocked by license"
+ACT_02,WL1_Sparse,Sparse_68.89pct,Icarus_Verilog_12.0,VCD,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,PENDING_LICENSE,"VCD dump supported by iverilog; Vivado read_vcd blocked by license"
+ACT_03,WL2_Sparse,Sparse_66.57pct,Icarus_Verilog_12.0,VCD,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,PENDING_LICENSE,"VCD dump supported by iverilog; Vivado read_vcd blocked by license"
+ACT_04,WL3_Sparse,Sparse_48.11pct,Icarus_Verilog_12.0,VCD,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,PENDING_LICENSE,"VCD dump supported by iverilog; Vivado read_vcd blocked by license"
+ACT_05,WL4_Sparse,Sparse_84.92pct,Icarus_Verilog_12.0,VCD,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,PENDING_LICENSE,"VCD dump supported by iverilog; Vivado read_vcd blocked by license"
+

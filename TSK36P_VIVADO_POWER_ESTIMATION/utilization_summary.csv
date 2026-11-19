@@ -1,0 +1,5 @@
+Run_ID,FPGA_Part,Target_Module,Slice_LUTs_Used,Slice_LUTs_Avail,LUT_Utilization_Pct,Slice_Registers_Used,Slice_Registers_Avail,Register_Utilization_Pct,DSP48E_Slices_Used,DSP48E_Slices_Avail,DSP_Utilization_Pct,Block_RAM_Tile_Used,Block_RAM_Tile_Avail,BRAM_Utilization_Pct,IO_Pins_Used,IO_Pins_Avail,Status,Notes
+UTIL_01,xc7a100tcsg324-1,neural_acc_integrated_top,BLOCKED,63400,BLOCKED,BLOCKED,126800,BLOCKED,BLOCKED,240,BLOCKED,BLOCKED,135,BLOCKED,BLOCKED,210,BLOCKED_LICENSE,"Vivado 2026.1 launch failed: No valid license found"
+UTIL_02,xc7a100tcsg324-1,pe_array_40b,BLOCKED,63400,BLOCKED,BLOCKED,126800,BLOCKED,BLOCKED,240,BLOCKED,BLOCKED,135,BLOCKED,BLOCKED,210,BLOCKED_LICENSE,"Vivado 2026.1 launch failed: No valid license found"
+UTIL_03,xc7a100tcsg324-1,multibank_sram_subsystem,BLOCKED,63400,BLOCKED,BLOCKED,126800,BLOCKED,BLOCKED,240,BLOCKED,BLOCKED,135,BLOCKED,BLOCKED,210,BLOCKED_LICENSE,"Vivado 2026.1 launch failed: No valid license found"
+

@@ -1,0 +1,8 @@
+Run_ID,FPGA_Part,Target_Frequency_MHz,PE_Mode,Workload_Profile,Estimation_Method,Total_OnChip_Power_W,Dynamic_Power_W,Static_Power_W,Clock_Power_W,Logic_Power_W,Signal_Power_W,BRAM_Power_W,DSP_Power_W,Junction_Temp_C,Thermal_Margin_C,Execution_Status,Notes
+RUN_01,xc7a100tcsg324-1,100.0,64-PE,Dense,Vectorless,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Vivado 2026.1 launch failed: No valid license found"
+RUN_02,xc7a100tcsg324-1,100.0,64-PE,WL1_Sparse,VCD_Annotated,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Simulation VCD dump ready; Vivado license required"
+RUN_03,xc7a100tcsg324-1,100.0,32-PE,Dense,Vectorless,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Vivado 2026.1 launch failed: No valid license found"
+RUN_04,xc7a100tcsg324-1,100.0,32-PE,WL1_Sparse,VCD_Annotated,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Simulation VCD dump ready; Vivado license required"
+RUN_05,xc7a100tcsg324-1,100.0,16-PE,Dense,Vectorless,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Vivado 2026.1 launch failed: No valid license found"
+RUN_06,xc7a100tcsg324-1,100.0,16-PE,WL1_Sparse,VCD_Annotated,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED,BLOCKED_LICENSE,"Simulation VCD dump ready; Vivado license required"
+
