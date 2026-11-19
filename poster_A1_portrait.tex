@@ -8,7 +8,7 @@
 %  Compile: pdflatex poster_A1_portrait.tex  (Overleaf: pdfLaTeX)
 %  Files needed in the same folder: this .tex file, iittp_logo.png,
 %                                  Neural_Acc_Architecture_Presentation.png,
-%                                  poster_results_chart.png
+%                                  poster_results_chart.png, github_repo_qr.png
 % =====================================================================
 \documentclass{article}
 
@@ -114,13 +114,9 @@
 \end{minipage}%
 \hfill
 \begin{minipage}[c]{0.14\textwidth}
-  \centering\begin{minipage}{0.9\linewidth}
-  \begin{tikzpicture}
-    \draw[iitmaroon, line width=2pt, dash pattern=on 10pt off 7pt, fill=iitlight]
-      (0,0) rectangle (\linewidth,\linewidth);
-    \node[text=iitmaroon, align=center, font=\smallsize\bfseries] at (0.5\linewidth,0.5\linewidth)
-      {RTL Code\\ \& Verified\\ Telemetry};
-  \end{tikzpicture}\end{minipage}
+  \centering
+  \includegraphics[width=0.86\linewidth]{github_repo_qr.png}\\[0.25em]
+  {\smallsize\bfseries\color{iitmaroon} Scan for RTL Code\\ \& Verified Data\par}
 \end{minipage}
 
 \vspace{10pt}
