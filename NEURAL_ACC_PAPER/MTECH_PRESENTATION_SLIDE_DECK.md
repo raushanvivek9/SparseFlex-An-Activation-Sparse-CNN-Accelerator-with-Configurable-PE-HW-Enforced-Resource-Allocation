@@ -3,7 +3,7 @@
 **Project Title:** SparseFlex: An Activation-Sparse CNN Accelerator with Reconfigurable Processing Elements (16/32/64) and Hardware-Enforced Resource Allocation  
 **Core Achievement:** *SparseFlex successfully decouples power reduction from timing jitter, achieving up to 84.92% switching savings with zero cycle variation.*  
 **Author / Presenter:** M.Tech Student Researcher  
-**Total Slides:** 10 Slides (8 Mandatory + 2 Extra High-Impact Slides)  
+**Total Slides:** 11 Slides (8 Mandatory + 1 Architectural Deep-Dive + 2 Extra High-Impact Slides)  
 
 ---
 
@@ -112,6 +112,61 @@
 
 #### Speaker Speaking Notes:
 > *"Our approach unites synchronous zero-gating with dynamic PE scaling. The most intelligent part of the design is that we achieve up to 84.92% switching activity reduction while preserving exact cycle determinism: dense and sparse workloads execute in the exact same 9,569 clock cycles. What I am most proud of is discovering and quantifying the multi-pass memory trade-off: when you throttle PEs to save logic power, you increase on-chip memory reads by up to +300%, which actually increases total system energy. Exposing this trade-off is a major contribution to accelerator literature."*
+
+---
+
+## Slide 4B: Technical Deep-Dive — Determining $L_{\max}$, $P_{\max}$ & Feasible PE Selection
+*(Architectural Deep-Dive: Mathematical Formulation, Runtime Decision Engine & Concrete Walkthrough)*
+
+### Slide Title: Hardware Policy Engine: Determining $L_{\max}$, $P_{\max}$ & Feasible PE Selection
+
+#### Visual Layout:
+* **Top-Left (System Origins):** Diagram showing Host RTOS ($L_{\max}$ generation) and Thermal/Battery Management Unit ($P_{\max}$ generation).
+* **Top-Right (PE Modes & Latencies):** Summary table of the 3 hardware configurations (Cycles, Passes, Active Logic Saved).
+* **Bottom (Concrete Walkthrough):** 4-scenario decision matrix showing inputs $\to$ combinatorial evaluation $\to$ resolved mode.
+
+#### Key Bullet Points:
+
+1. **How $L_{\max}$ (Latency Budget) is Decided:**
+   * **Source:** Host Real-Time Operating System (RTOS) or application scheduler.
+   * **Calculation:** Derived from end-to-end frame rate deadlines in edge vision (e.g., 30 fps or 60 fps for autonomous drone/automotive navigation):
+     $$T_{\text{frame}} = 16.6\text{ ms } (60\text{ fps}) \implies L_{\max} = \frac{T_{\text{frame\_budget}}}{N_{\text{layers}}} \times f_{\text{clk}}$$
+   * At $f_{\text{clk}} = 100\text{ MHz}$ ($10\text{ ns}$ period):
+     * A relaxed background processing tile receives $L_{\max} = 40,000\text{ cycles}$ ($0.4\text{ ms}$).
+     * An urgent collision-avoidance feature receives $L_{\max} = 15,000\text{ cycles}$ ($0.15\text{ ms}$).
+
+2. **How $P_{\max}$ (Peak PE Cap) is Decided:**
+   * **Source:** Dynamic Power Management IC (PMIC) and on-chip thermal junction sensors ($T_j$).
+   * **Operating Thresholds:**
+     * **Normal / Wall-Powered ($T_j < 70^\circ\text{C}$, 100% battery):** $P_{\max} = 64\text{ PEs}$ (full silicon utilization permitted).
+     * **Elevated Temperature ($70^\circ\text{C} \le T_j \le 85^\circ\text{C}$, 50% battery):** $P_{\max} = 32\text{ PEs}$ (thermal throttling to prevent overheating).
+     * **Critical Thermal Budget ($T_j > 85^\circ\text{C}$, < 20% battery):** $P_{\max} = 16\text{ PEs}$ (aggressive power reduction mode).
+     * **Sub-Threshold / Fault ($P_{\max} < 16$):** Triggers unconditional hardware fail-safe interlock.
+
+3. **Single-Cycle Feasible PE Mode Selection Algorithm:**
+   * The hardware controller (`tsk33_transparent_policy_controller.sv`) evaluates deterministic mode latencies in **pure combinatorial logic (1 clock cycle)**:
+     * **16-PE Mode (`2'b00`):** $T(16) = 38,225\text{ cycles}$ ($P=4$ passes; **75.0% active logic saved**).
+     * **32-PE Mode (`2'b01`):** $T(32) = 19,121\text{ cycles}$ ($P=2$ passes; **50.0% active logic saved**).
+     * **64-PE Mode (`2'b10`):** $T(64) = 9,569\text{ cycles}$ ($P=1$ pass; **0.0% saved, peak throughput**).
+   * **Policy A (`pol_sel = 0` - Energy/Resource Minimization):**
+     $$\min M \in \{16, 32, 64\} \quad \text{s.t.} \quad M \le P_{\max} \quad \text{and} \quad T(M) \le L_{\max}$$
+   * **Policy B (`pol_sel = 1` - Performance/Slack Maximization):**
+     $$\max M \in \{16, 32, 64\} \quad \text{s.t.} \quad M \le P_{\max} \quad \text{and} \quad T(M) \le L_{\max}$$
+
+4. **Concrete Walkthrough Scenarios:**
+
+| Scenario | Objective | $L_{\max}$ (Cycles) | $P_{\max}$ (Cap) | Hardware Evaluation | Resolved Mode | Resulting Hardware Action |
+| :--- | :---: | :---: | :---: | :--- | :---: | :--- |
+| **1. Battery Saving** | Policy A | $40,000$ | $64$ | $T(16) = 38,225 \le 40,000$ \checkmark & $16 \le 64$ \checkmark | **16 PEs (`2'b00`)** | **Saves 75.0% active logic** while meeting deadline. |
+| **2. Tight Deadline** | Policy A | $15,000$ | $64$ | $T(16)$ \& $T(32)$ exceed $L_{\max}$; $T(64) = 9,569 \le 15,000$ \checkmark | **64 PEs (`2'b10`)** | Dispatches full array to guarantee real-time SLA. |
+| **3. Hot SoC Throttling** | Policy B | $25,000$ | $32$ | 64 PEs disallowed ($64 > 32$); $T(32) = 19,121 \le 25,000$ \checkmark | **32 PEs (`2'b01`)** | Delivers max allowable throughput (+5,879 cycles slack). |
+| **4. Safety Interlock** | Any | Any | $8$ | Illegal cap ($P_{\max} < 16$); impossible physical allocation | **Locked (`2'b11`)** | **Halt:** Zero compute/write strobes; protects chip. |
+
+#### Speaker Speaking Notes:
+> *"A frequent question from reviewers is: how are $L_{\max}$ and $P_{\max}$ decided, and how does the hardware pick a configuration?*  
+> *Here is the exact mechanism: $L_{\max}$ is the real-time latency budget in clock cycles, generated by the host RTOS based on the camera frame rate. For example, a 60 fps vision stream grants $40,000$ cycles for a relaxed layer, but an urgent collision check gives only $15,000$ cycles.*  
+> *$P_{\max}$ is the peak PE cap decided by the SoC's dynamic thermal management. When the chip is cool, $P_{\max}=64$. If thermal sensors detect elevated temperature, the power controller drops $P_{\max}$ to 32 or 16 PEs.*  
+> *In our hardware, a single-cycle combinatorial policy controller arbitrates between Policy A—which minimizes active PEs to save logic power under the deadline—and Policy B—which maximizes timing slack. As shown in our concrete examples: with a relaxed 40,000-cycle budget, Policy A selects 16 PEs, saving 75% active logic. If the deadline tightens to 15,000 cycles, it instantly allocates all 64 PEs. And if the host requests an invalid cap like $P_{\max}=8$, our combinatorial interlock immediately shuts off execution enable, locking the mode to prevent silicon deadlock."*
 
 ---
 
