@@ -158,13 +158,32 @@
 
 ```
 ========================================================================================
-[TIME: 3:30 - 3:45] SCENE 7: GITHUB REPOSITORY & CONCLUSION
+[TIME: 3:30 - 4:05] SCENE 7: ARCHITECTURE SUMMARY & CLOSING SIGN-OFF
 ========================================================================================
 ```
-* **On Screen:** Switch window to web browser showing your [GitHub Repository](https://github.com/raushanvivek9/SparseFlex-An-Activation-Sparse-CNN-Accelerator-with-Configurable-PE-HW-Enforced-Resource-Allocation).
+* **On Screen:** Full-screen view of [`SparseFlex_Architecture_Block_Diagram.jpg`](./SparseFlex_Architecture_Block_Diagram.jpg).
+* **Action:** Move your mouse cursor to point to the blocks as you mention them:
+  1. Point to **Zero-Gate Feeder** and **64-PE Array**.
+  2. Point to **Policy Controller** and **Quadrants (Q0, Q1, Q2, Q3)**.
+  3. Point to **Drain + Requantize** and **8-Bank SRAM**.
+  4. Point to the three bottom callout boxes (**Zero-gating**, **Policy**, **Fail-safe**).
 
-#### What to Say:
-> *"This concludes the live demonstration of SparseFlex. All synthesizable SystemVerilog RTL files, testbenches, simulation telemetry, and scripts are fully open-sourced on our GitHub repository. Thank you very much."*
+#### Word-for-Word Spoken Script:
+> *"To bring everything together, here is the complete top-level architecture of SparseFlex that we just demonstrated live on screen.*  
+>  
+> *(Point mouse to Zero-Gate Feeder & 64-PE Array)*  
+> *1. **Synchronous Zero-Gating:** Our Zero-Gate Feeder detects zero activations post-ReLU and gates weight SRAM wordlines and multiplier clock enables, eliminating **48% to 85% dynamic MAC power** while keeping pipeline execution strictly deterministic with **zero timing jitter**.*  
+>  
+> *(Point mouse to Policy Controller & Quadrants Q0, Q1, Q2, Q3)*  
+> *2. **Reconfigurable Array & Policy Control:** Our single-cycle Policy Controller dynamically scales the compute array across 16, 32, and 64 PEs through quadrant clock-gating to meet real-time deadlines under dynamic thermal caps. If host software ever requests an illegal limit below 16 PEs, an unconditional **hardware fail-safe interlock** immediately locks the array off to protect the silicon.*  
+>  
+> *(Point mouse to Drain + Requantize)*  
+> *3. **Bit-Exact Numerical Fidelity:** Our 40-bit saturating accumulation with 8 guard bits eliminates dynamic overflow, achieving **Mean Absolute Error equal to 0.000000**.*  
+>  
+> *(Move cursor to top / center)*  
+> *All synthesizable SystemVerilog RTL modules, automated testbenches, and verified simulation telemetry are fully open-sourced on our GitHub repository.*  
+>  
+> *Thank you very much for your time and evaluation."*
 
 ---
 
