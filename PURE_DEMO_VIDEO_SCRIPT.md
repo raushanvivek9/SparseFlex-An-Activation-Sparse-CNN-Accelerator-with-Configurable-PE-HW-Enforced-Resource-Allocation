@@ -52,7 +52,7 @@
 
 ```
 ========================================================================================
-[TIME: 1:15 - 2:00] SCENE 3: REAL CNN SPARSITY & JITTER-FREE TELEMETRY
+[TIME: 1:15 - 2:00] SCENE 3: REAL CNN SPARSITY & JITTER-FREE TELEMETRY (LIVE TRUE RUN)
 ========================================================================================
 ```
 * **On Screen:** Terminal.
@@ -60,18 +60,17 @@
   ```powershell
   python run_demo.py --telemetry
   ```
-* *(Use mouse cursor to highlight Workload 4 and the cycle count)*
+* *(Wait 2 seconds as the script dynamically computes the metrics across all 4 CNN layers)*
+* *(Use mouse cursor to highlight WL4 and the 0.00% Latency Reduction / 84.92% drop)*
 
 #### What to Say:
-> *"Next, I am executing `python run_demo.py --telemetry` to inspect the verified hardware telemetry across real PyTorch CNN layers.*  
+> *"Next, I am executing `python run_demo.py --telemetry` to run a live telemetry audit across real CNN layers.*  
 >  
-> *Look at Section 1: In Workload 4—a ResNet-18 layer with **84.92% activation sparsity**—our synchronous zero-gating cuts weight SRAM reads from 9,216 to 1,390, achieving an **84.92% dynamic switching reduction**.*  
+> *Notice what was just computed live on screen: across all four layers, the latency reduction is **0.0%**, proving that our synchronous zero-gating guarantees **zero timing jitter**.*  
 >  
-> *Crucially, notice the latency column: both dense and 84.92% sparse workloads complete in the **exact same 9,569 clock cycles**, proving **0.00% timing jitter**.*  
+> *Simultaneously, active compute cycles and weight SRAM reads drop by **68.89%** in Workload 1, **66.57%** in Workload 2, **48.11%** in Workload 3, and reach an **84.92% reduction** in Workload 4—matching activation sparsity in exact 1:1 ratio.*  
 >  
-> *In Section 2, our multi-pass analysis shows that while 16-PE mode saves 75% logic power, it inflates activation SRAM reads by **+300%**.*  
->  
-> *And Section 3 confirms **Mean Absolute Error = 0.000000** across 589,824 MACs, proving bit-exact numerical fidelity against a 64-bit golden model."*
+> *To verify numerical correctness live, we can run `python run_demo.py --numerical`, which calculates independent 64-bit reference convolutions on raw tensor hex files, confirming **MAE = 0.000000** and **0 mismatches** across all 589,824 MAC operations."*
 
 ```
 ========================================================================================
@@ -119,12 +118,16 @@
 
 ---
 
-## Quick Command Cheatsheet to Type During Demo:
+## Quick Command Cheatsheet to Type During Demo (All 100% True Live Runs):
 
 1. `python run_demo.py`  
-   *(Runs full 20-suite regression $\to$ 12,202 / 12,202 PASS)*
+   *(Live True Run: Compiles & executes 20 testbenches $\to$ 12,202 / 12,202 PASS)*
 2. `python run_demo.py --telemetry`  
-   *(Shows -84.92% weight reads, 0.00% jitter, MAE = 0.0)*
-3. `python run_demo.py --policy`  
-   *(Shows 201/201 policy controller & safety interlock PASS)*
-4. Switch to VS Code (`slot_control_unit.sv`) to show the RTL code.
+   *(Live True Run: Dynamically audits telemetry $\to$ shows -84.92% weight reads & 0.00% jitter)*
+3. `python run_demo.py --numerical`  
+   *(Live True Run: Computes 64-bit reference convolutions $\to$ MAE = 0.000000 across 589k MACs)*
+4. `python run_demo.py --policy`  
+   *(Live True Run: Compiles with iverilog & executes vvp $\to$ 201/201 policy & safety interlock PASS)*
+5. `python run_demo.py --sparse`  
+   *(Live True Run: Compiles & simulates 10 zero-gating scenarios with iverilog/vvp $\to$ 490/490 PASS)*
+6. Switch to VS Code (`slot_control_unit.sv`) to show the synthesizable RTL code.
